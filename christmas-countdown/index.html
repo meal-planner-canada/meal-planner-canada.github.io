@@ -378,12 +378,13 @@
       .adv-stop .dot { display: block; font-size: 1.1rem; margin-bottom: 2px; filter: grayscale(1); opacity: .5; }
       .adv-stop.reached { color: var(--ink); }
       .adv-stop.reached .dot { filter: none; opacity: 1; }
-      .snowman-scene {
-        min-height: 92px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: center;
-        background: linear-gradient(180deg, #0d1a44, #2c4a8a); border: 2px solid var(--line); border-radius: 18px; padding: 12px;
-        font-size: 2.1rem; line-height: 1.25;
+      .snowman-stage {
+        background: linear-gradient(180deg, #0d1a44, #2c4a8a); border: 2px solid var(--line); border-radius: 18px;
+        padding: 10px 8px 4px; margin-top: 6px;
       }
-      .snowman-scene .not-yet { font-size: 1rem; font-weight: 800; color: var(--ink-soft); }
+      .snowman-stage svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; }
+      .snow-part { opacity: .14; filter: grayscale(1); transition: opacity .3s ease; }
+      .snow-part.earned { opacity: 1; filter: none; animation: bounceIn .5s ease; transform-box: fill-box; transform-origin: center; }
       .puzzle-box { position: relative; border-radius: 18px; overflow: hidden; border: 2px solid var(--line); }
       .puzzle-img { display: block; width: 100%; height: auto; }
       .puzzle-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); }
@@ -659,19 +660,51 @@
       .joke-a { font-size: clamp(1.2rem, 4vw, 1.55rem); font-weight: 800; color: var(--gold-soft); min-height: 1.5em; margin: 10px auto 0; max-width: 560px; display: none; }
       .joke-a.on { display: block; animation: bounceIn .5s ease; }
       .joke-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
-      .riddle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin-top: 18px; }
-      .riddle {
-        background: linear-gradient(180deg, #182a5e, #101d47); border: 2px solid var(--line);
-        border-radius: 22px; padding: 20px; box-shadow: var(--shadow);
+      /* One big riddle card: tap the whole card to see the answer, big Next button below */
+      .riddle-big { margin-top: 18px; text-align: center; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+      .riddle-big:focus-visible { outline: 4px solid var(--gold); outline-offset: 3px; }
+      .riddle-count { margin: 10px 0 0; font-weight: 800; font-size: 1.05rem; color: var(--ink-soft); }
+      .riddle-big .rq {
+        font-family: "Fredoka", sans-serif; font-weight: 600;
+        font-size: clamp(1.5rem, 5vw, 2rem); line-height: 1.35;
+        margin: 14px auto 4px; max-width: 620px;
       }
-      .riddle .rq { margin: 0; font-weight: 800; font-size: 1.08rem; }
-      .riddle .ra { display: none; margin: 12px 0 0; font-weight: 800; color: var(--gold-soft); font-size: 1.08rem; }
-      .riddle .ra.on { display: block; animation: bounceIn .5s ease; }
-      .riddle .mini-btn {
-        margin-top: 14px; font-family: "Fredoka", sans-serif; font-weight: 600; cursor: pointer;
-        border: 2px solid var(--gold); border-radius: 999px; padding: 10px 18px; min-height: 48px;
-        background: rgba(245, 185, 63, .16); color: var(--gold-soft); font-size: 1rem; width: 100%;
+      .riddle-big .ra {
+        display: none; margin: 14px auto 0; max-width: 620px;
+        font-weight: 800; color: var(--gold-soft);
+        font-size: clamp(1.3rem, 4.5vw, 1.65rem); line-height: 1.35;
       }
+      .riddle-big .ra.on { display: block; animation: bounceIn .5s ease; }
+      .riddle-hint { margin: 16px auto 0; max-width: 560px; font-weight: 800; font-size: 1.1rem; color: var(--ink-soft); }
+      .riddle-reveal-btn {
+        display: block; width: 100%; min-height: 68px; margin-top: 18px;
+        font-size: 1.3rem; background: var(--gold); color: #5c3c04;
+      }
+      .riddle-next-btn {
+        display: block; width: 100%; min-height: 84px; margin-top: 14px;
+        font-size: clamp(1.45rem, 5vw, 1.7rem); background: var(--red); color: #fff;
+        border: 3px solid var(--gold-soft);
+      }
+
+      /* ---------- Daily movie ---------- */
+      .movie-card {
+        text-align: center;
+        background: linear-gradient(180deg, #14532d, #0b3520);
+        border: 3px dashed var(--gold);
+      }
+      .movie-emoji { font-size: 4.2rem; display: block; line-height: 1.1; margin-top: 10px; }
+      .movie-title {
+        font-family: "Fredoka", sans-serif; font-weight: 700;
+        font-size: clamp(1.7rem, 5.5vw, 2.4rem); line-height: 1.15;
+        margin: 10px auto 4px; max-width: 620px;
+      }
+      .movie-meta { margin: 6px auto 0; font-weight: 800; color: var(--gold-soft); font-size: 1.05rem; }
+      .movie-note {
+        margin: 12px auto 0; max-width: 620px;
+        font-size: clamp(1.1rem, 3.5vw, 1.3rem); font-weight: 700; line-height: 1.45;
+      }
+      .movie-find { margin: 14px auto 0; max-width: 560px; font-weight: 700; color: var(--ink-soft); font-size: .98rem; }
+      .movie-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
 
       /* ---------- Catch the Snowflakes game ---------- */
       .game-area {
@@ -940,6 +973,7 @@
         <a class="nav-btn" href="#workshop"><span class="ne" aria-hidden="true">🔮</span><span data-i18n="navGlobe">Workshop Globe</span></a>
         <a class="nav-btn" href="#advent"><span class="ne" aria-hidden="true">🎁</span><span data-i18n="navDoors">Advent Doors</span></a>
         <a class="nav-btn" href="#jokes"><span class="ne" aria-hidden="true">😂</span><span data-i18n="navJokes">Jokes &amp; Riddles</span></a>
+        <a class="nav-btn" href="#movies"><span class="ne" aria-hidden="true">🎬</span><span data-i18n="navMovie">Movie Night</span></a>
         <a class="nav-btn" href="#game"><span class="ne" aria-hidden="true">❄️</span><span data-i18n="navGame">Snowflake Game</span></a>
         <a class="nav-btn" href="#colouring"><span class="ne" aria-hidden="true">🎨</span><span data-i18n="navColour">Colouring Pages</span></a>
       </nav>
@@ -1106,7 +1140,194 @@
           <div class="magic-card">
             <h3 data-i18n="snowmanH">⛄ Build-a-Snowman</h3>
             <p class="magic-sub" data-i18n="snowmanSub">Every door you open adds a new piece to your snowman!</p>
-            <div class="snowman-scene" id="snowmanScene"><span class="not-yet">Just snow… open a door to start building! ❄️</span></div>
+            <div class="snowman-stage" id="snowmanScene">
+              <svg class="snowman-svg" viewBox="0 0 260 262" role="img" aria-label="A snowman that grows piece by piece as you open doors">
+                <path d="M2,246 Q65,234 130,243 Q195,252 258,240 L258,262 L2,262 Z" fill="#eaf4ff" />
+                <ellipse cx="130" cy="248" rx="64" ry="7" fill="rgba(70, 110, 170, .25)" />
+                <mask id="snowMoonCut">
+                  <circle cx="224" cy="28" r="21" fill="#ffffff" />
+                  <circle cx="235" cy="21" r="16.5" fill="#000000" />
+                </mask>
+                <g class="snow-part" id="snow-part-20">
+                  <circle cx="224" cy="28" r="21" fill="#ffe9a8" mask="url(#snowMoonCut)" />
+                  <path d="M196,44 l1.7,4 4,1.7 -4,1.7 -1.7,4 -1.7,-4 -4,-1.7 4,-1.7 Z" fill="#fff3c4" />
+                  <path d="M244,58 l1.3,3 3,1.3 -3,1.3 -1.3,3 -1.3,-3 -3,-1.3 3,-1.3 Z" fill="#fff3c4" />
+                </g>
+                <g class="snow-part" id="snow-part-19" stroke="#d7e9ff" stroke-width="2" stroke-linecap="round">
+                  <path d="M23,28 H37 M25.1,21.9 L34.9,34.1 M34.9,21.9 L25.1,34.1" />
+                  <path d="M52.5,66 H63.5 M54.8,61.2 L61.2,70.8 M61.2,61.2 L54.8,70.8" />
+                  <path d="M28.5,128 H39.5 M30.8,123.2 L37.2,132.8 M37.2,123.2 L30.8,132.8" />
+                  <path d="M223,150 H233 M225.5,145.7 L230.5,154.3 M230.5,145.7 L225.5,154.3" />
+                  <circle cx="86" cy="96" r="1.4" fill="#d7e9ff" stroke="none" />
+                  <circle cx="176" cy="130" r="1.4" fill="#d7e9ff" stroke="none" />
+                  <circle cx="48" cy="170" r="1.4" fill="#d7e9ff" stroke="none" />
+                </g>
+                <g class="snow-part" id="snow-part-21">
+                  <rect x="233" y="238" width="6" height="9" fill="#6d4c41" />
+                  <polygon points="236,204 223,229 249,229" fill="#277a36" />
+                  <polygon points="236,216 221,243 251,243" fill="#1e6b2e" />
+                  <polygon points="236,197 237.8,201.6 242.6,201.8 238.9,204.7 240.1,209.4 236,206.7 231.9,209.4 233.1,204.7 229.4,201.8 234.2,201.6" fill="#f7c948" stroke="#d99a16" stroke-width=".8" stroke-linejoin="round" />
+                </g>
+                <g class="snow-part" id="snow-part-17">
+                  <ellipse cx="13" cy="230" rx="3.5" ry="9" fill="#263238" transform="rotate(12 13 230)" />
+                  <ellipse cx="41" cy="230" rx="3.5" ry="9" fill="#263238" transform="rotate(-12 41 230)" />
+                  <ellipse cx="27" cy="226" rx="14" ry="19" fill="#263238" />
+                  <ellipse cx="27" cy="232" rx="8.5" ry="12.5" fill="#ffffff" />
+                  <circle cx="22" cy="216" r="3.2" fill="#ffffff" />
+                  <circle cx="32" cy="216" r="3.2" fill="#ffffff" />
+                  <circle cx="22" cy="216.5" r="1.6" fill="#263238" />
+                  <circle cx="32" cy="216.5" r="1.6" fill="#263238" />
+                  <polygon points="27,220 23,224 31,224" fill="#f5a623" />
+                  <ellipse cx="20" cy="246" rx="5" ry="2.5" fill="#f5a623" />
+                  <ellipse cx="34" cy="246" rx="5" ry="2.5" fill="#f5a623" />
+                </g>
+                <g class="snow-part" id="snow-part-18">
+                  <path d="M190,238 C170,242 160,228 166,214 C174,224 184,226 192,230 Z" fill="#f07f13" />
+                  <path d="M166,214 C172,222 180,225 188,227 C179,233 168,227 166,214 Z" fill="#ffffff" />
+                  <ellipse cx="196" cy="230" rx="13" ry="15" fill="#f07f13" />
+                  <ellipse cx="196" cy="235" rx="7" ry="10" fill="#ffffff" />
+                  <polygon points="187,199 185,186 196,194" fill="#f07f13" />
+                  <polygon points="205,199 207,186 196,194" fill="#f07f13" />
+                  <circle cx="196" cy="208" r="12.5" fill="#f07f13" />
+                  <ellipse cx="196" cy="214" rx="6.5" ry="4.5" fill="#ffffff" />
+                  <circle cx="196" cy="211" r="2" fill="#263238" />
+                  <circle cx="191" cy="205" r="1.7" fill="#263238" />
+                  <circle cx="201" cy="205" r="1.7" fill="#263238" />
+                  <ellipse cx="188" cy="246" rx="5" ry="2.5" fill="#b34d00" />
+                  <ellipse cx="204" cy="246" rx="5" ry="2.5" fill="#b34d00" />
+                </g>
+                <g class="snow-part" id="snow-part-16">
+                  <rect x="52" y="216" width="29" height="22" rx="2" fill="#2e9e4f" stroke="#1e6b2e" stroke-width="1.5" />
+                  <rect x="49" y="209" width="35" height="9" rx="2" fill="#277a36" stroke="#1e6b2e" stroke-width="1.5" />
+                  <rect x="63.5" y="209" width="6" height="29" fill="#f5b93f" />
+                  <ellipse cx="60" cy="205" rx="5" ry="3" fill="#f5b93f" stroke="#d99a16" stroke-width=".8" transform="rotate(-24 60 205)" />
+                  <ellipse cx="73" cy="205" rx="5" ry="3" fill="#f5b93f" stroke="#d99a16" stroke-width=".8" transform="rotate(24 73 205)" />
+                </g>
+                <g class="snow-part" id="snow-part-9" fill="none" stroke="#7a4a21" stroke-linecap="round">
+                  <path d="M102,126 Q72,116 52,98" stroke-width="5" />
+                  <path d="M60,108 L48,100 M64,112 L52,110" stroke-width="3.5" />
+                  <path d="M158,126 Q188,114 208,94" stroke-width="5" />
+                  <path d="M200,102 L212,94 M196,106 L208,104" stroke-width="3.5" />
+                </g>
+                <g class="snow-part" id="snow-part-10">
+                  <circle cx="47" cy="92" r="9" fill="#d92b2b" />
+                  <circle cx="55" cy="97" r="4.2" fill="#d92b2b" />
+                  <rect x="38" y="98" width="16" height="6" rx="3" fill="#ffffff" transform="rotate(-24 46 101)" />
+                  <circle cx="213" cy="90" r="9" fill="#d92b2b" />
+                  <circle cx="205" cy="95" r="4.2" fill="#d92b2b" />
+                  <rect x="206" y="96" width="16" height="6" rx="3" fill="#ffffff" transform="rotate(24 214 99)" />
+                </g>
+                <g class="snow-part" id="snow-part-15">
+                  <path d="M223,94 q3,-4 0,-8 M232,94 q-3,-4 0,-8" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".85" />
+                  <path d="M239,109 a6,5.5 0 1,1 0,9" fill="none" stroke="#8e1414" stroke-width="2.5" />
+                  <rect x="216" y="104" width="23" height="19" rx="4" fill="#c62828" stroke="#8e1414" stroke-width="1.2" />
+                  <ellipse cx="227.5" cy="104" rx="11.5" ry="3.5" fill="#6d4c41" />
+                  <rect x="222" y="100" width="8" height="5" rx="2" fill="#ffffff" />
+                </g>
+                <g class="snow-part" id="snow-part-0">
+                  <circle cx="130" cy="202" r="47" fill="#fdfdff" stroke="#bfd9f2" stroke-width="2" />
+                  <ellipse cx="130" cy="228" rx="30" ry="11" fill="#d9e9fa" opacity=".55" />
+                </g>
+                <g class="snow-part" id="snow-part-14">
+                  <path d="M100,230 h15 v9 h13 v7 h-28 Z" fill="#455a64" />
+                  <path d="M104,234 l7,4 M104,239 l7,3" stroke="#ffffff" stroke-width="1.4" />
+                  <path d="M106,246 v3 M122,246 v3 M97,249 h34" fill="none" stroke="#90a4ae" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M145,230 h15 v9 h13 v7 h-28 Z" fill="#455a64" />
+                  <path d="M149,234 l7,4 M149,239 l7,3" stroke="#ffffff" stroke-width="1.4" />
+                  <path d="M151,246 v3 M167,246 v3 M142,249 h34" fill="none" stroke="#90a4ae" stroke-width="2.5" stroke-linecap="round" />
+                </g>
+                <g class="snow-part" id="snow-part-1">
+                  <circle cx="130" cy="126" r="35" fill="#fdfdff" stroke="#bfd9f2" stroke-width="2" />
+                  <ellipse cx="130" cy="150" rx="24" ry="8" fill="#d9e9fa" opacity=".5" />
+                </g>
+                <g class="snow-part" id="snow-part-2">
+                  <circle cx="130" cy="70" r="27" fill="#fdfdff" stroke="#bfd9f2" stroke-width="2" />
+                  <ellipse cx="130" cy="90" rx="18" ry="6" fill="#d9e9fa" opacity=".5" />
+                </g>
+                <g class="snow-part" id="snow-part-8" fill="#263238">
+                  <circle cx="130" cy="136" r="3.6" />
+                  <circle cx="130" cy="150" r="3.6" />
+                  <circle cx="130" cy="180" r="3.6" />
+                  <circle cx="130" cy="198" r="3.6" />
+                  <circle cx="130" cy="216" r="3.6" />
+                </g>
+                <g class="snow-part" id="snow-part-13">
+                  <polygon points="130,115 111,107 111,123" fill="#8a5fb0" stroke="#6d4391" stroke-width="1" stroke-linejoin="round" />
+                  <polygon points="130,115 149,107 149,123" fill="#8a5fb0" stroke="#6d4391" stroke-width="1" stroke-linejoin="round" />
+                  <circle cx="130" cy="115" r="4.5" fill="#7b4fa6" />
+                </g>
+                <g class="snow-part" id="snow-part-7">
+                  <rect x="99" y="89" width="62" height="14" rx="7" fill="#d92b2b" />
+                  <rect x="112" y="89" width="5" height="14" fill="#b31b1b" />
+                  <rect x="143" y="89" width="5" height="14" fill="#b31b1b" />
+                  <g transform="rotate(7 152 103)">
+                    <rect x="145" y="101" width="14" height="33" rx="5" fill="#d92b2b" />
+                    <rect x="145" y="124" width="14" height="5" fill="#b31b1b" />
+                    <path d="M148.5,134 v6 M152,134 v6 M155.5,134 v6" stroke="#b31b1b" stroke-width="2" stroke-linecap="round" />
+                  </g>
+                </g>
+                <g class="snow-part" id="snow-part-11">
+                  <path d="M144,120 a8,8 0 0,1 16,0 l2,4.5 h-20 Z" fill="#f5b93f" stroke="#d99a16" stroke-width="1.2" stroke-linejoin="round" />
+                  <circle cx="152" cy="126.5" r="2" fill="#d99a16" />
+                </g>
+                <g class="snow-part" id="snow-part-3">
+                  <circle cx="120" cy="63" r="3.4" fill="#263238" />
+                  <circle cx="140" cy="63" r="3.4" fill="#263238" />
+                  <circle cx="119" cy="62" r="1.1" fill="#ffffff" />
+                  <circle cx="139" cy="62" r="1.1" fill="#ffffff" />
+                </g>
+                <g class="snow-part" id="snow-part-4">
+                  <polygon points="130,71 159,76.5 130,80" fill="#f07f13" stroke="#d96a06" stroke-width="1.2" stroke-linejoin="round" />
+                  <path d="M138,74.3 l10,1.5 M136,77.4 l9,1.1" stroke="#d96a06" stroke-width="1.2" stroke-linecap="round" />
+                </g>
+                <g class="snow-part" id="snow-part-5" fill="#263238">
+                  <circle cx="112" cy="77" r="1.7" />
+                  <circle cx="117" cy="82" r="1.7" />
+                  <circle cx="124" cy="84.5" r="1.7" />
+                  <circle cx="132" cy="84.5" r="1.7" />
+                  <circle cx="139" cy="82" r="1.7" />
+                </g>
+                <g class="snow-part" id="snow-part-6">
+                  <rect x="109" y="15" width="42" height="31" rx="4" fill="#263238" />
+                  <rect x="109" y="35" width="42" height="10" fill="#d92b2b" />
+                  <rect x="100" y="43" width="60" height="7" rx="3.5" fill="#1b252b" />
+                </g>
+                <g class="snow-part" id="snow-part-12">
+                  <polygon points="130,33.5 131.9,38.2 136.9,38.4 133,41.4 134.3,46.2 130,43.4 125.7,46.2 127,41.4 123.1,38.4 128.1,38.2" fill="#f7c948" stroke="#d99a16" stroke-width="1" stroke-linejoin="round" />
+                </g>
+                <g class="snow-part" id="snow-part-24">
+                  <polygon points="110,9 111,1.5 120,7 130,1 140,7 149,1.5 150,9" fill="#f5b93f" stroke="#d99a16" stroke-width="1.2" stroke-linejoin="round" />
+                  <rect x="110" y="8" width="40" height="5" fill="#f5b93f" stroke="#d99a16" stroke-width="1.2" />
+                  <circle cx="120" cy="10.5" r="1.6" fill="#d92b2b" />
+                  <circle cx="130" cy="10.5" r="1.8" fill="#2fa84f" />
+                  <circle cx="140" cy="10.5" r="1.6" fill="#3f7fd8" />
+                </g>
+                <g class="snow-part" id="snow-part-22">
+                  <path d="M95,148 Q130,168 165,148" fill="none" stroke="#14401f" stroke-width="1.6" />
+                  <circle cx="105" cy="156" r="6" fill="#e0342c" opacity=".3" /><circle cx="105" cy="156" r="3.4" fill="#e0342c" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="119" cy="160" r="6" fill="#f5b93f" opacity=".3" /><circle cx="119" cy="160" r="3.4" fill="#f5b93f" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="133" cy="161" r="6" fill="#3f7fd8" opacity=".3" /><circle cx="133" cy="161" r="3.4" fill="#3f7fd8" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="147" cy="158" r="6" fill="#2fa84f" opacity=".3" /><circle cx="147" cy="158" r="3.4" fill="#2fa84f" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="159" cy="153" r="6" fill="#ff7fb0" opacity=".3" /><circle cx="159" cy="153" r="3.4" fill="#ff7fb0" stroke="#fff8e6" stroke-width=".7" />
+                  <path d="M90,192 Q130,216 170,192" fill="none" stroke="#14401f" stroke-width="1.6" />
+                  <circle cx="102" cy="200" r="6" fill="#3f7fd8" opacity=".3" /><circle cx="102" cy="200" r="3.4" fill="#3f7fd8" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="118" cy="205" r="6" fill="#ff7fb0" opacity=".3" /><circle cx="118" cy="205" r="3.4" fill="#ff7fb0" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="134" cy="206" r="6" fill="#e0342c" opacity=".3" /><circle cx="134" cy="206" r="3.4" fill="#e0342c" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="150" cy="203" r="6" fill="#f5b93f" opacity=".3" /><circle cx="150" cy="203" r="3.4" fill="#f5b93f" stroke="#fff8e6" stroke-width=".7" />
+                  <circle cx="163" cy="197" r="6" fill="#2fa84f" opacity=".3" /><circle cx="163" cy="197" r="3.4" fill="#2fa84f" stroke="#fff8e6" stroke-width=".7" />
+                </g>
+                <g class="snow-part" id="snow-part-23" fill="#ffd98a">
+                  <rect x="70" y="12" width="2.6" height="20" />
+                  <path d="M72.6,12 q8,2 6,10 q-1,-5 -6,-6 Z" />
+                  <ellipse cx="67" cy="34" rx="5" ry="3.6" transform="rotate(-18 67 34)" />
+                  <rect x="80" y="28" width="3" height="24" />
+                  <rect x="102" y="24" width="3" height="24" />
+                  <polygon points="80,24 105,20 105,28 80,32" />
+                  <ellipse cx="77" cy="54" rx="5.5" ry="4" transform="rotate(-18 77 54)" />
+                  <ellipse cx="99" cy="50" rx="5.5" ry="4" transform="rotate(-18 99 50)" />
+                </g>
+              </svg>
+            </div>
             <p class="magic-msg" id="snowmanMsg">Next piece: the big bottom snowball!</p>
           </div>
 
@@ -1154,7 +1375,37 @@
             <button class="btn" id="jokeToday" type="button" style="background:#fff; color:#7d0f16; display:none;" data-i18n="jokeToday">⭐ Back to today's joke</button>
           </div>
         </div>
-        <div class="riddle-grid" id="riddleGrid"></div>
+        <div class="card riddle-big" id="riddleCard" tabindex="0" aria-label="Riddle card. Tap to see the answer, then tap again for the next riddle.">
+          <span class="daily-label" data-i18n="riddleLabel">🧩 Riddle Time!</span>
+          <p class="riddle-count" id="riddleCount"></p>
+          <span class="joke-emoji" aria-hidden="true">🧩</span>
+          <p class="rq" id="riddleQ"></p>
+          <p class="ra" id="riddleA" aria-live="polite"></p>
+          <p class="riddle-hint" id="riddleHint"></p>
+          <button class="btn riddle-reveal-btn" id="riddleReveal" type="button">Peek at the answer 👀</button>
+          <button class="btn riddle-next-btn" id="riddleNext" type="button">Next Riddle ➡️</button>
+        </div>
+      </section>
+
+      <!-- ===== Daily movie: one family movie night pick every day ===== -->
+      <section id="movies" aria-labelledby="movieH">
+        <div class="sec-head">
+          <h2 id="movieH">🎬 <span data-i18n="movieH">Christmas Movie Night</span></h2>
+          <p data-i18n="movieSub">One cosy movie idea arrives every single day! Every pick is gentle and fun for little kids, and good enough that grown-ups love watching too. Pile up the blankets, make hot chocolate, and watch together!</p>
+        </div>
+        <div class="card movie-card" style="margin-top:18px;">
+          <span class="daily-label" id="movieDayLabel">🎬 Movie of the Day</span>
+          <p class="daily-date" id="movieDateLabel"></p>
+          <span class="movie-emoji" id="movieEmoji" aria-hidden="true">🍿</span>
+          <p class="movie-title" id="movieTitle">Press the button for a movie!</p>
+          <p class="movie-meta" id="movieMeta"></p>
+          <p class="movie-note" id="movieNote"></p>
+          <p class="movie-find" data-i18n="movieFind">Grown-ups: look for it on your family's TV, streaming apps, or at the library. Popcorn and hot chocolate make it perfect!</p>
+          <div class="movie-btns">
+            <button class="btn" id="movieNext" type="button" data-i18n="movieNext">Another movie idea! 🎲</button>
+            <button class="btn" id="movieToday" type="button" style="background:#fff; color:#7d0f16; display:none;" data-i18n="movieToday">⭐ Back to today's movie</button>
+          </div>
+        </div>
       </section>
 
       <!-- ===== Catch the Snowflakes game ===== -->
@@ -1338,6 +1589,38 @@
 
         /* Scrambled door order on the board, so finding today's number is a hunt */
         var ORDER = [7, 21, 3, 14, 25, 10, 18, 1, 23, 6, 12, 20, 4, 16, 8, 24, 2, 19, 11, 5, 22, 9, 15, 13, 17];
+
+        /* ============ Daily movies: 25 gentle family movie night picks, a different one every day ============
+           Every pick is made for young kids and grown-ups to watch together: kind stories,
+           songs and giggles, nothing scary. Short specials for little ones, big family
+           favourites for movie night. */
+        var MOVIES = [
+          { emoji: "⛄", title: "Frosty the Snowman", year: 1969, mins: 25, note: "A friendly snowman comes to life and plays with the kids all day. Sweet songs, a happy ending, and just the right length for little watchers." },
+          { emoji: "🦌", title: "Rudolph the Red-Nosed Reindeer", year: 1964, mins: 47, note: "Rudolph feels different because his nose glows, then his bright nose saves Christmas. A cosy classic the whole family can sing along to." },
+          { emoji: "🎄", title: "A Charlie Brown Christmas", year: 1965, mins: 25, note: "Charlie Brown and the Peanuts gang find out what Christmas is really about, with a tiny tree everybody loves. Quiet, funny, and full of heart." },
+          { emoji: "💚", title: "How the Grinch Stole Christmas!", year: 1966, mins: 26, note: "The original Dr. Seuss cartoon. The Grinch is grumpy, never scary, and his heart grows three sizes. Short, silly, and perfect before bed." },
+          { emoji: "❄️", title: "The Snowman", year: 1982, mins: 26, note: "A boy builds a snowman who comes to life, and they fly together over the snow. There are no words at all, just beautiful pictures and music." },
+          { emoji: "🐭", title: "Mickey's Christmas Carol", year: 1983, mins: 26, note: "Mickey, Donald, and Goofy tell the famous Christmas story in the kindest, silliest way. A gentle first version of the tale for little kids." },
+          { emoji: "🎅", title: "Santa Claus Is Comin' to Town", year: 1970, mins: 48, note: "How Santa got his reindeer, his toys, and his big kind heart, told with puppets and songs. Sweet and slow in the best way." },
+          { emoji: "🌡️", title: "The Year Without a Santa Claus", year: 1974, mins: 51, note: "Santa catches a cold, so Mrs. Claus and two funny elves save the day. Grown-ups love the Snow Miser and Heat Miser songs just as much as kids do." },
+          { emoji: "🎁", title: "Mickey's Once Upon a Christmas", year: 1999, mins: 66, note: "Three short Mickey and friends stories in one movie, all about giving and family. Easy to pause between stories for a snack break." },
+          { emoji: "🍯", title: "Winnie the Pooh: A Very Merry Pooh Year", year: 2002, mins: 65, note: "Pooh, Piglet, and Tigger celebrate together in the Hundred Acre Wood. As gentle as a movie gets, and lovely for the very youngest watchers." },
+          { emoji: "🐵", title: "Curious George: A Very Monkey Christmas", year: 2009, mins: 58, note: "George the curious monkey tries to find the perfect gift for the Man with the Yellow Hat. Bright, kind, and full of monkey giggles." },
+          { emoji: "🧝", title: "Prep & Landing", year: 2009, mins: 22, note: "Two tiny elves sneak into houses to get everything ready for Santa. A short, funny adventure that grown-ups enjoy just as much as kids." },
+          { emoji: "🦦", title: "Emmet Otter's Jug-Band Christmas", year: 1977, mins: 48, note: "Jim Henson's sweet story of a little otter and his mum, who each try to win a talent show to help the other. Cosy songs and a big warm heart." },
+          { emoji: "👧", title: "Angela's Christmas", year: 2017, mins: 30, note: "A kind little girl in Ireland wants to keep the baby in the church crib warm on Christmas Eve. Short, tender, and easy for young kids to follow." },
+          { emoji: "🫏", title: "The Small One", year: 1978, mins: 26, note: "A gentle Disney story about a small, kind donkey and the boy who loves him, on the very first Christmas night. Quiet and very sweet." },
+          { emoji: "🚂", title: "The Polar Express", year: 2004, mins: 100, note: "A magic train takes kids to the North Pole to meet Santa. Big, sparkly, and exciting, and a family favourite grown-ups ask for by name." },
+          { emoji: "🎅", title: "Arthur Christmas", year: 2011, mins: 97, note: "Santa's clumsy son Arthur races to deliver one missed present. Very funny for grown-ups, kind and exciting for kids, with a happy ending for everyone." },
+          { emoji: "💚", title: "The Grinch", year: 2018, mins: 86, note: "The bright cartoon Grinch plans to steal Christmas, and the kind Whos change his mind. Silly, colourful, and gentle all the way through." },
+          { emoji: "✉️", title: "Klaus", year: 2019, mins: 96, note: "A spoiled postman and a quiet toymaker become friends and start a Christmas tradition. Beautiful to look at, and a story grown-ups truly love too." },
+          { emoji: "⭐", title: "The Star", year: 2017, mins: 86, note: "A brave little donkey and his animal friends follow a star on the first Christmas night. Funny animals, catchy songs, and a sweet story." },
+          { emoji: "🧝", title: "Elf", year: 2003, mins: 97, note: "Buddy the Elf leaves the North Pole to find his dad in the big city. Silly, kind, and full of songs, a movie night pick the whole family quotes for weeks." },
+          { emoji: "🎭", title: "The Muppet Christmas Carol", year: 1992, mins: 85, note: "Kermit, Miss Piggy, and the Muppets make the classic story funny and friendly, with songs everyone ends up humming. A true family favourite." },
+          { emoji: "⛄", title: "Olaf's Frozen Adventure", year: 2017, mins: 21, note: "Olaf hunts all over Arendelle for the best Christmas tradition to bring home to Anna and Elsa. Short, snowy, and full of songs." },
+          { emoji: "🎶", title: "Jingle Jangle: A Christmas Journey", year: 2020, mins: 122, note: "A toymaker, his granddaughter, and a tiny robot bring a workshop back to life with music and dancing. A big musical treat, great with an intermission snack in the middle." },
+          { emoji: "🐱", title: "A Garfield Christmas", year: 1987, mins: 24, note: "Garfield goes to a cosy farm for Christmas and learns that family is the best gift. Funny, warm, and short enough for little watchers." }
+        ];
 
         /* ============ 25 Christmas jokes: one behind each door, and in the jokes section ============ */
         var JOKES = [
@@ -2138,6 +2421,22 @@ function itemSVG(key) {
           jokeToday: { en: "⭐ Back to today's joke", fr: "⭐ Revenir à la blague du jour" },
           riddlePeek: { en: "Peek at the answer 👀", fr: "Voir la réponse 👀" },
           riddleHide: { en: "Hide the answer 🙈", fr: "Cacher la réponse 🙈" },
+          riddleLabel: { en: "🧩 Riddle Time!", fr: "🧩 Devinette !" },
+          riddleCount: { en: "Riddle {n} of {total}", fr: "Devinette {n} sur {total}" },
+          riddleNext: { en: "Next Riddle ➡️", fr: "Devinette suivante ➡️" },
+          riddleHintTap: { en: "Tap the big card to see the answer!", fr: "Touche la grande carte pour voir la réponse !" },
+          riddleHintNext: { en: "Tap the card or the big Next button for another riddle!", fr: "Touche la carte ou le gros bouton pour une autre devinette !" },
+          riddleCardAria: { en: "Riddle card. Tap to see the answer, then tap again for the next riddle.", fr: "Carte devinette. Touche pour voir la réponse, puis touche encore pour la devinette suivante." },
+          navMovie: { en: "Movie Night", fr: "Soirée cinéma" },
+          movieH: { en: "Christmas Movie Night", fr: "Soirée cinéma de Noël" },
+          movieSub: { en: "One cosy movie idea arrives every single day! Every pick is gentle and fun for little kids, and good enough that grown-ups love watching too. Pile up the blankets, make hot chocolate, and watch together!", fr: "Une idée de film douillet arrive chaque jour ! Chaque film est doux et amusant pour les petits, et assez bon pour que les grands aiment le regarder aussi. Empilez les couvertures, faites du chocolat chaud, et regardez-le ensemble !" },
+          movieOfDay: { en: "🎬 Movie of the Day", fr: "🎬 Film du jour" },
+          movieAnother: { en: "🎲 Another movie idea", fr: "🎲 Une autre idée de film" },
+          movieDateSuffix: { en: "A new one arrives tomorrow!", fr: "Un nouveau arrive demain !" },
+          movieMeta: { en: "{year} · About {mins} minutes · A gentle family pick", fr: "{year} · Environ {mins} minutes · Un choix doux pour toute la famille" },
+          movieFind: { en: "Grown-ups: look for it on your family's TV, streaming apps, or at the library. Popcorn and hot chocolate make it perfect!", fr: "Les grands : cherchez-le à la télé de la famille, dans vos applis de films, ou à la bibliothèque. Du maïs soufflé et du chocolat chaud, et c'est parfait !" },
+          movieNext: { en: "Another movie idea! 🎲", fr: "Une autre idée de film ! 🎲" },
+          movieToday: { en: "⭐ Back to today's movie", fr: "⭐ Revenir au film du jour" },
           gameH: { en: "❄️ Catch the Snowflakes!", fr: "❄️ Attrape les flocons !" },
           gameSub: { en: "Tap the falling snowflakes to catch them. No timers, no losing, just catching!", fr: "Touche les flocons qui tombent pour les attraper. Pas de minuterie, personne ne perd, on attrape, c'est tout !" },
           gameStart: { en: "▶ Start the Snow!", fr: "▶ Que la neige tombe !" },
@@ -2562,6 +2861,33 @@ function itemSVG(key) {
           { q: "Nous sommes de petits aides avec des oreilles pointues et des souliers recourbés, et nous fabriquons des jouets toute l'année. Qui sommes-nous ?", a: "Les lutins." },
           { q: "Quelle est la chose préférée du père Noël, à dire trois fois de suite ?", a: "Ho, ho, ho !" }
         ];
+        var MOVIES_FR = [
+          { title: "Frosty le bonhomme de neige", note: "Un bonhomme de neige gentil prend vie et joue avec les enfants toute la journée. Des chansons douces, une fin heureuse, et juste la bonne durée pour les petits." },
+          { title: "Rodolphe le renne au nez rouge", note: "Rodolphe se sent différent parce que son nez brille, puis son nez lumineux sauve Noël. Un classique douillet que toute la famille peut chanter." },
+          { title: "Joyeux Noël, Charlie Brown !", note: "Charlie Brown et ses amis découvrent ce que Noël veut vraiment dire, avec un tout petit sapin que tout le monde adore. Doux, drôle, et plein de cœur." },
+          { title: "Comment le Grinch a volé Noël", note: "Le dessin animé original du Dr Seuss. Le Grinch est grognon, jamais effrayant, et son cœur devient trois fois plus gros. Court, drôle, et parfait avant le dodo." },
+          { title: "Le Bonhomme de neige", note: "Un garçon construit un bonhomme de neige qui prend vie, et ils volent ensemble au-dessus de la neige. Il n'y a aucun mot, juste de belles images et de la musique." },
+          { title: "Le Noël de Mickey", note: "Mickey, Donald et Dingo racontent la célèbre histoire de Noël de la façon la plus gentille et la plus drôle. Une première version toute douce pour les petits." },
+          { title: "Le père Noël arrive en ville", note: "Comment le père Noël a eu ses rennes, ses jouets et son grand cœur gentil, raconté avec des marionnettes et des chansons. Doux et tranquille, de la meilleure façon." },
+          { title: "L'année sans père Noël", note: "Le père Noël a un rhume, alors madame Noël et deux lutins drôles sauvent la situation. Les grands aiment les chansons de Froid et de Chaud autant que les enfants." },
+          { title: "Mickey, il était une fois Noël", note: "Trois petites histoires de Mickey et ses amis dans un seul film, sur le don et la famille. Facile de faire une pause entre les histoires pour une collation." },
+          { title: "Winnie l'ourson : un Noël plein de joie", note: "Winnie, Porcinet et Tigrou fêtent ensemble dans la Forêt des Rêves Bleus. Aussi doux qu'un film peut l'être, et parfait pour les plus petits." },
+          { title: "Curieux George : un Noël de singe", note: "George, le petit singe curieux, cherche le cadeau parfait pour l'Homme au chapeau jaune. Lumineux, gentil, et plein de rires de singe." },
+          { title: "Lutins d'élite : Mission Noël", note: "Deux petits lutins entrent dans les maisons pour tout préparer pour le père Noël. Une aventure courte et drôle que les grands aiment autant que les enfants." },
+          { title: "Le Noël d'Emmet Otter", note: "La douce histoire de Jim Henson : un petit loutre et sa maman essaient chacun de gagner un concours pour aider l'autre. Des chansons douillettes et un grand cœur chaud." },
+          { title: "Le Noël d'Angela", note: "Une petite fille gentille, en Irlande, veut garder le bébé de la crèche de l'église au chaud la veille de Noël. Court, tendre, et facile à suivre pour les petits." },
+          { title: "Le Petit Âne", note: "Une histoire douce de Disney sur un petit âne gentil et le garçon qui l'aime, la toute première nuit de Noël. Tranquille et très douce." },
+          { title: "Le Boréal Express", note: "Un train magique emmène des enfants au pôle Nord pour rencontrer le père Noël. Grand, brillant et excitant, un favori que les grands demandent par son nom." },
+          { title: "Mission : Noël", note: "Arthur, le fils maladroit du père Noël, court livrer un cadeau oublié. Très drôle pour les grands, gentil et excitant pour les enfants, avec une fin heureuse pour tout le monde." },
+          { title: "Le Grinch (2018)", note: "Le Grinch en dessin animé veut voler Noël, et les gentils habitants lui font changer d'idée. Drôle, coloré, et doux du début à la fin." },
+          { title: "Klaus", note: "Un facteur gâté et un fabricant de jouets tranquille deviennent amis et commencent une tradition de Noël. Magnifique à regarder, et une histoire que les grands aiment vraiment aussi." },
+          { title: "L'Étoile de Noël", note: "Un petit âne courageux et ses amis animaux suivent une étoile la première nuit de Noël. Des animaux drôles, des chansons entraînantes, et une histoire douce." },
+          { title: "Le Lutin", note: "Buddy le lutin quitte le pôle Nord pour retrouver son papa dans la grande ville. Drôle, gentil, et plein de chansons, un film que toute la famille cite pendant des semaines." },
+          { title: "Noël chez les Muppets", note: "Kermit, Piggy et les Muppets rendent l'histoire classique drôle et gentille, avec des chansons que tout le monde finit par fredonner. Un vrai favori de famille." },
+          { title: "Un Noël avec Olaf", note: "Olaf cherche partout à Arendelle la meilleure tradition de Noël à rapporter à Anna et Elsa. Court, enneigé, et plein de chansons." },
+          { title: "Jingle Jangle : un Noël enchanté", note: "Un fabricant de jouets, sa petite-fille et un petit robot ramènent un atelier à la vie avec de la musique et de la danse. Un grand spectacle musical, parfait avec une collation à la pause au milieu." },
+          { title: "Le Noël de Garfield", note: "Garfield va dans une ferme douillette pour Noël et découvre que la famille est le plus beau cadeau. Drôle, chaud, et assez court pour les petits." }
+        ];
         var ACCESSORIES_FR = ["un foulard rouge douillet", "un beau haut-de-forme", "un collier à grelot", "un joli nœud rose", "une étoile brillante", "une couronne royale", "des bas de Noël douillets", "une canne de bonbon", "un flocon qui brille", "un mini chapeau de père Noël", "des bois de renne", "des brillants magiques", "des mitaines bien chaudes", "un biscuit collation", "un chapeau petit sapin", "un bijou qui brille", "une étoile lumineuse", "un sac à dos cadeau", "une épinglette bonhomme de neige", "des lunettes de hibou sage", "des bottes dorées", "un pendentif note de musique", "une médaille de meilleur animal", "des feux d'artifice brillants", "un cœur doré de Noël"];
         var SNOWMAN_PARTS_FR = ["la grosse boule du bas", "la boule du milieu", "la boule de la tête", "deux yeux en charbon", "un nez en carotte", "un grand sourire", "un grand haut-de-forme", "un foulard douillet", "des boutons brillants", "des bras en branches", "des mitaines bien chaudes", "un grelot", "une étoile sur son chapeau", "un nœud papillon", "des patins à glace", "une tasse de chocolat chaud", "un cadeau à tenir", "un ami pingouin", "un ami renard", "des flocons tout autour", "la lune à qui sourire", "son propre petit sapin", "des lumières brillantes", "une chanson à chanter", "la couronne du Roi des neiges, ton bonhomme est fini !"];
         var PICTURES_FR = ["Père Noël", "Père Noël et bonhomme de neige", "Renne et bonhomme de neige", "Sapin de Noël", "Maison en pain d'épice", "Bonhomme en pain d'épice", "Cannes de bonbon", "Cloche de Noël", "Bas près du feu", "Pingouin", "Casse-noisette", "Ange", "Ange et étoile", "Lutin", "Boule de Noël", "Couronne", "Étoile souriante", "Hibou et cadeaux", "Toutou et lumières", "Houx", "Poinsettia", "Lanterne"];
@@ -2592,6 +2918,8 @@ function itemSVG(key) {
           DATA_EN = {
             doors: DOORS.slice(), jokes: JOKES.slice(), riddles: RIDDLES.slice(),
             story: STORY.slice(), missions: MISSIONS.slice(),
+            movT: MOVIES.map(function (m) { return m.title; }),
+            movN: MOVIES.map(function (m) { return m.note; }),
             accN: ACCESSORIES.map(function (a) { return a.n; }),
             snowN: SNOWMAN_PARTS.map(function (a) { return a.n; }),
             picN: PICTURES.map(function (p) { return p.name; }),
@@ -2612,6 +2940,7 @@ function itemSVG(key) {
           swapInto(RIDDLES, l === "fr" ? RIDDLES_FR : DATA_EN.riddles);
           swapInto(STORY, l === "fr" ? STORY_FR : DATA_EN.story);
           swapInto(MISSIONS, l === "fr" ? MISSIONS_FR : DATA_EN.missions);
+          MOVIES.forEach(function (m, i) { m.title = l === "fr" ? MOVIES_FR[i].title : DATA_EN.movT[i]; m.note = l === "fr" ? MOVIES_FR[i].note : DATA_EN.movN[i]; });
           ACCESSORIES.forEach(function (a, i) { a.n = l === "fr" ? ACCESSORIES_FR[i] : DATA_EN.accN[i]; });
           SNOWMAN_PARTS.forEach(function (a, i) { a.n = l === "fr" ? SNOWMAN_PARTS_FR[i] : DATA_EN.snowN[i]; });
           PICTURES.forEach(function (p, i) { p.name = l === "fr" ? PICTURES_FR[i] : DATA_EN.picN[i]; });
@@ -2668,6 +2997,7 @@ function itemSVG(key) {
           buildPicGrid();
           buildPalette();
           renderDailyPic();
+          renderMovie();
           showJoke();
           updatePet();
           refreshProgress();
@@ -3023,18 +3353,11 @@ function itemSVG(key) {
             n === 0 ? t("journeyNone") :
             n === 25 ? t("journeyDone") :
             tf(n === 1 ? "journeySome1" : "journeySome", { n: n, stop: nextStop ? nextStop.label : ADV_STOPS[ADV_STOPS.length - 1].label, icon: nextStop ? nextStop.icon : "🏡" });
-          /* Build-a-snowman */
-          var scene = document.getElementById("snowmanScene");
-          if (n === 0) {
-            scene.innerHTML = '<span class="not-yet">' + t("snowSceneNone") + "</span>";
-          } else {
-            scene.innerHTML = "";
-            for (var k = 0; k < n; k++) {
-              var sp = document.createElement("span");
-              sp.textContent = SNOWMAN_PARTS[k].e;
-              sp.title = SNOWMAN_PARTS[k].n;
-              scene.appendChild(sp);
-            }
+          /* Build-a-snowman: every earned piece shows in its place on the snowman,
+             unearned pieces stay as faint outlines where they belong */
+          for (var k = 0; k < 25; k++) {
+            var spart = document.getElementById("snow-part-" + k);
+            if (spart) spart.classList.toggle("earned", k < n);
           }
           document.getElementById("snowmanMsg").textContent =
             n === 0 ? tf("snowNextFirst", { part: SNOWMAN_PARTS[0].n }) :
@@ -3502,24 +3825,93 @@ function itemSVG(key) {
         });
         showJoke();
 
-        var riddleGrid = document.getElementById("riddleGrid");
-        function buildRiddles() {
-          riddleGrid.innerHTML = "";
-          RIDDLES.forEach(function (r) {
-            var card = document.createElement("div");
-            card.className = "riddle";
-            var q = document.createElement("p"); q.className = "rq"; q.textContent = "🧩 " + r.q;
-            var a = document.createElement("p"); a.className = "ra"; a.textContent = r.a;
-            var btn = document.createElement("button");
-            btn.className = "mini-btn"; btn.type = "button"; btn.textContent = t("riddlePeek");
-            btn.addEventListener("click", function () {
-              var on = a.classList.toggle("on");
-              btn.textContent = on ? t("riddleHide") : t("riddlePeek");
-            });
-            card.appendChild(q); card.appendChild(btn); card.appendChild(a);
-            riddleGrid.appendChild(card);
-          });
+        /* ============ Daily movie: a different family movie every day, rotating with the date ============ */
+        var movieTodayIdx = dailySeed() % MOVIES.length;
+        var movieIdx = movieTodayIdx;
+        var movieTodayBtn = document.getElementById("movieToday");
+        function renderMovie() {
+          var m = MOVIES[movieIdx];
+          if (!m) return;
+          var isToday = movieIdx === movieTodayIdx;
+          document.getElementById("movieDayLabel").textContent = isToday ? t("movieOfDay") : t("movieAnother");
+          document.getElementById("movieDateLabel").textContent = "📅 " + todayLabel() + ". " + t("movieDateSuffix");
+          document.getElementById("movieEmoji").textContent = m.emoji;
+          document.getElementById("movieTitle").textContent = m.title;
+          document.getElementById("movieMeta").textContent = tf("movieMeta", { year: m.year, mins: m.mins });
+          document.getElementById("movieNote").textContent = m.note;
+          movieTodayBtn.style.display = isToday ? "none" : "";
         }
+        document.getElementById("movieNext").addEventListener("click", function () {
+          movieIdx = (movieIdx + 1) % MOVIES.length;
+          renderMovie();
+          jingleBells();
+        });
+        movieTodayBtn.addEventListener("click", function () {
+          movieIdx = movieTodayIdx;
+          renderMovie();
+        });
+        renderMovie();
+
+        /* ============ Riddles: one big card. Tap the card for the answer, tap again (or the big Next button) for the next riddle ============ */
+        var riddleCard = document.getElementById("riddleCard"),
+            riddleQ = document.getElementById("riddleQ"),
+            riddleA = document.getElementById("riddleA"),
+            riddleCount = document.getElementById("riddleCount"),
+            riddleHint = document.getElementById("riddleHint"),
+            riddleRevealBtn = document.getElementById("riddleReveal"),
+            riddleNextBtn = document.getElementById("riddleNext");
+        var riddleIdx = RIDDLES.length ? dailySeed() % RIDDLES.length : 0;
+        var riddleShown = false;
+        function showRiddle() {
+          if (!RIDDLES.length) return;
+          riddleIdx = ((riddleIdx % RIDDLES.length) + RIDDLES.length) % RIDDLES.length;
+          riddleShown = false;
+          riddleQ.textContent = RIDDLES[riddleIdx].q;
+          riddleA.textContent = "";
+          riddleA.classList.remove("on");
+          riddleCount.textContent = tf("riddleCount", { n: riddleIdx + 1, total: RIDDLES.length });
+          riddleHint.textContent = t("riddleHintTap");
+          riddleRevealBtn.textContent = t("riddlePeek");
+          riddleRevealBtn.style.display = "";
+          riddleNextBtn.textContent = t("riddleNext");
+          riddleCard.setAttribute("aria-label", t("riddleCardAria"));
+        }
+        function revealRiddle() {
+          if (riddleShown || !RIDDLES.length) return;
+          riddleShown = true;
+          riddleA.textContent = RIDDLES[riddleIdx].a;
+          riddleA.classList.add("on");
+          riddleHint.textContent = t("riddleHintNext");
+          riddleRevealBtn.style.display = "none";
+          jingleBells();
+        }
+        function nextRiddle() {
+          riddleIdx = RIDDLES.length ? (riddleIdx + 1) % RIDDLES.length : 0;
+          showRiddle();
+        }
+        function tapRiddleCard() {
+          if (riddleShown) nextRiddle(); else revealRiddle();
+        }
+        riddleCard.addEventListener("click", function (e) {
+          if (e.target === riddleRevealBtn || e.target === riddleNextBtn) return;
+          tapRiddleCard();
+        });
+        riddleCard.addEventListener("keydown", function (e) {
+          if (e.target !== riddleCard) return;
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+            tapRiddleCard();
+          }
+        });
+        riddleRevealBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          revealRiddle();
+        });
+        riddleNextBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          nextRiddle();
+        });
+        function buildRiddles() { showRiddle(); }
         buildRiddles();
 
         /* ============ Catch the Snowflakes game ============ */
